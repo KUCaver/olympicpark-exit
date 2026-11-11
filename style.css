@@ -1,0 +1,164 @@
+/* 밤의 주차장: 아스팔트, 노면 글자, 중앙선, 정지선, 도로 전광판 */
+:root {
+  --asphalt: #23272e;
+  --asphalt-deep: #171a1f;
+  --paint: #f3f2ec;
+  --paint-dim: #a9adb3;
+  --lane: #f5b800;
+  --jam: #ff4d3d;
+  --flow: #2bd47d;
+  --sign: #2a62d6;
+  --display: "Black Han Sans", "IBM Plex Sans KR", sans-serif;
+  --body: "IBM Plex Sans KR", "Malgun Gothic", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--asphalt); }
+body {
+  margin: 0;
+  color: var(--paint);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  word-break: keep-all;
+  /* 아스팔트 알갱이 */
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, .035) 0 1px, transparent 1.5px) 0 0 / 7px 7px,
+    radial-gradient(circle at 70% 60%, rgba(0, 0, 0, .18) 0 1px, transparent 1.5px) 0 0 / 11px 11px,
+    var(--asphalt);
+}
+button, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--lane); outline-offset: 3px; }
+
+#app { max-width: 460px; margin: 0 auto; padding: 28px 20px 56px; }
+.loading { color: var(--paint-dim); }
+
+/* 제목: 노면 글자처럼 세로로 늘인다 */
+.road-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 46px;
+  line-height: 1.02;
+  letter-spacing: .01em;
+  margin: 0;
+  transform: scaleY(1.5);
+  transform-origin: left top;
+  height: calc(46px * 1.02 * 2 * 1.5); /* 늘어난 높이만큼 자리를 잡아 둔다 */
+}
+.road-title span { display: block; }
+.lede { margin: 14px 0 22px; color: var(--paint-dim); max-width: 30em; }
+
+/* 고르기 */
+.roles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.roles button {
+  border: 2px solid var(--paint-dim);
+  background: transparent;
+  border-radius: 6px;
+  padding: 12px 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.roles button[aria-pressed="true"] { background: var(--sign); border-color: var(--paint); }
+.pick { display: block; margin: 16px 0 0; }
+.pick span { display: block; font-size: 14px; color: var(--paint-dim); margin-bottom: 6px; }
+.pick select {
+  width: 100%;
+  background: var(--asphalt-deep);
+  border: 2px solid #3a4049;
+  border-radius: 6px;
+  padding: 11px 12px;
+  font-weight: 500;
+}
+
+/* 한 줄 답 */
+.answer {
+  margin: 26px 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+.answer .money { color: var(--lane); white-space: nowrap; }
+.when { margin: 0 0 4px; font-size: 14px; color: var(--paint-dim); }
+
+/* 고른 공연 날: 파란 안내 표지판 */
+.event { margin: 18px 0 0; padding: 14px 16px; background: var(--sign); border: 2px solid var(--paint); border-radius: 6px; }
+.event-day { margin: 0 0 6px; font-family: var(--display); font-size: 22px; }
+.event ul { list-style: none; margin: 0; padding: 0; }
+.event li { margin: 2px 0; }
+.event a { color: var(--paint); font-weight: 700; }
+.event li span { font-size: 14px; white-space: nowrap; opacity: 0.85; }
+.event .kind { margin: 10px 0 0; font-size: 14px; }
+
+/* 중앙선 시간축 */
+.lane { list-style: none; margin: 22px 0 0; padding: 0 0 0 34px; position: relative; }
+.lane::before {
+  content: "";
+  position: absolute; left: 9px; top: 6px; bottom: 6px; width: 6px;
+  background: repeating-linear-gradient(to bottom, var(--lane) 0 26px, transparent 26px 42px);
+  transform-origin: top;
+}
+.stop { position: relative; padding: 0 0 30px; }
+.stop:last-child { padding-bottom: 4px; }
+.stop::before { /* 정지선 */
+  content: "";
+  position: absolute; left: -34px; top: 10px; width: 24px; height: 7px;
+  background: var(--paint);
+}
+.stop h2 { margin: 0; font-size: 17px; font-weight: 500; color: var(--paint-dim); }
+.stop .big { margin: 2px 0 0; font-size: 30px; font-weight: 700; line-height: 1.25; letter-spacing: -.02em; }
+.stop .big.costly { color: var(--lane); }
+.stop p { margin: 6px 0 0; }
+.stop .note { color: var(--paint-dim); font-size: 15px; }
+
+/* 도로 전광판 낱말 */
+.vms {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 19px;
+  line-height: 1;
+  padding: 7px 11px 6px;
+  border-radius: 3px;
+  background: #0b0d10;
+  border: 1px solid #343a43;
+  vertical-align: 3px;
+  margin-left: 8px;
+}
+.vms.jam, .vms.peak { color: var(--jam); }
+.vms.slow { color: var(--lane); }
+.vms.free { color: var(--flow); }
+
+/* 근거 보기 */
+.proof { margin-top: 34px; border-top: 2px solid #3a4049; }
+.proof summary { cursor: pointer; padding: 16px 0; font-weight: 700; }
+.proof svg { display: block; width: 100%; height: auto; }
+.proof .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--paint-dim); margin: 8px 0 14px; }
+.proof .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
+.proof dl { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; margin: 0; font-size: 15px; }
+.proof dt { color: var(--paint-dim); }
+.proof dd { margin: 0; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.fine { margin-top: 18px; font-size: 13px; color: var(--paint-dim); }
+.fine a { color: inherit; }
+
+/* 전광판 보기 */
+body.board { background: #05070a; }
+body.board #app { max-width: 1200px; padding: 5vh 5vw; }
+.board-plate { border: 3px solid #2b3038; border-radius: 6px; padding: 5vh 5vw; background: #0b0d10; }
+.board-head { display: flex; justify-content: space-between; gap: 20px; color: var(--paint-dim); font-size: clamp(16px, 2.2vw, 28px); }
+.board-word { font-family: var(--display); font-size: clamp(88px, 22vw, 300px); line-height: 1; margin: 3vh 0 1vh; }
+.board-word.jam, .board-word.peak { color: var(--jam); } .board-word.slow { color: var(--lane); } .board-word.free { color: var(--flow); }
+.board-line { font-size: clamp(24px, 4.6vw, 64px); font-weight: 700; line-height: 1.3; margin: 0; }
+.board-line .money { color: var(--lane); }
+.board-ctl { display: flex; align-items: center; gap: 12px; margin-top: 18px; color: var(--paint-dim); font-size: 14px; }
+.board-ctl input { flex: 1; accent-color: var(--lane); }
+
+/* 처음 열 때 한 번: 중앙선이 그려지고 세 선택이 차례로 나타난다 */
+@media (prefers-reduced-motion: no-preference) {
+  .first .lane::before { animation: draw .7s ease-out both; }
+  .first .stop { animation: arrive .35s ease-out both; }
+  .first .stop:nth-child(1) { animation-delay: .25s; }
+  .first .stop:nth-child(2) { animation-delay: .45s; }
+  .first .stop:nth-child(3) { animation-delay: .65s; }
+}
+@keyframes draw { from { transform: scaleY(0); } }
+@keyframes arrive { from { opacity: 0; transform: translateY(8px); } }
