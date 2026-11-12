@@ -59,6 +59,12 @@ button, select { font: inherit; color: inherit; }
   cursor: pointer;
 }
 .roles button[aria-pressed="true"] { background: var(--sign); border-color: var(--paint); }
+.roles .wide { grid-column: 1 / -1; }
+.roles.three { grid-template-columns: repeat(3, 1fr); }
+.roles.four { grid-template-columns: repeat(4, 1fr); }
+.ask { margin: 18px 0 6px; font-size: 14px; color: var(--paint-dim); }
+.rec { margin-left: 8px; padding: 1px 8px; border-radius: 4px; background: var(--flow); color: #0b1f14; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.note a { color: var(--paint); }
 .pick { display: block; margin: 16px 0 0; }
 .pick span { display: block; font-size: 14px; color: var(--paint-dim); margin-bottom: 6px; }
 .pick select {
