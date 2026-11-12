@@ -23,7 +23,8 @@ const KIND = {
 };
 const today = new Date().toLocaleDateString("sv-SE"); // 보는 사람 시계의 오늘, YYYY-MM-DD
 // shortcut: 같은 조합의 지난 기록이 없는 날은 목록에서 뺀다. 2025년 기록을 받으면 조합이 늘어 거의 사라진다
-const upcoming = data.upcoming.filter((u) => u.date >= today && data.types[u.type]);
+// 주소에 적힌 날은 지났어도 남긴다. 공유한 주소가 날짜가 지난 뒤에도 같은 화면을 열게 하려는 것이다
+const upcoming = data.upcoming.filter((u) => (u.date >= today || u.date === qs.get("on")) && data.types[u.type]);
 
 const biggest = days.reduce((best, d, i) => (d.surge.peak_val > days[best].surge.peak_val ? i : best), 0);
 const state = {
@@ -212,7 +213,7 @@ function card(d, u) {
   const wants = v.quiet ? "" : `<p class="ask">무엇이 더 중요해요?</p>
     <div class="roles three" role="group" aria-label="무엇이 더 중요한지 고르기">${[["fast", "빨리"], ["cheap", "싸게"], ["calm", "덜 막히게"]].map(([k, name]) => `<button type="button" data-want="${k}" aria-pressed="${state.want === k}">${name}</button>`).join("")}</div>`;
   const past = days.map((x, i) => `<option value="day:${i}" ${!u && i === state.day ? "selected" : ""}>${dayName(x)} · ${esc(shows(x)) || `가장 붐빈 5분에 ${x.surge.peak_val}대`}</option>`).join("");
-  const next = upcoming.map((x) => `<option value="on:${x.date}" ${u === x ? "selected" : ""}>${dayName(x)} · ${esc(shows(x))}</option>`).join("");
+  const next = upcoming.map((x) => `<option value="on:${x.date}" ${u === x ? "selected" : ""}>${dayName(x)}${x.date < today ? " (지난 날)" : ""} · ${esc(shows(x))}</option>`).join("");
   const kind = u && data.types[u.type];
   const event = u ? `<div class="event">
       <p class="event-day">${dayName(u)}</p>
