@@ -220,7 +220,7 @@ function card(d, u) {
       <ul>${u.concerts.map((c) => `<li><a href="${esc(c.url)}" rel="noopener">${esc(c.title)}</a> <span>${c.venue}</span></li>`).join("")}</ul>
       <p class="kind">${KIND[u.type]}이에요. 2024년 7월의 이런 날 ${kind.days.length}일은 나가는 길이 ${Math.min(...kind.busy_min) === Math.max(...kind.busy_min) ? "" : `${Math.min(...kind.busy_min)}~`}${Math.max(...kind.busy_min)}분 동안 붐볐어요.</p>
     </div>` : "";
-  return `<h1 class="road-title"><span>지금 나갈까</span><span>기다릴까</span></h1>
+  return `<h1 class="road-title"><span>나갈깍?</span></h1>
     <p class="lede">올림픽공원 주차장에서 공연이 끝난 뒤 나가는 길을 지난 기록으로 알려 드려요.</p>
     <div class="roles" role="group" aria-label="누구인지 고르기">
       <button type="button" data-role="driver" aria-pressed="${state.role === "driver"}">차를 가져왔어요</button>
